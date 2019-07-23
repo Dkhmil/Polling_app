@@ -90,7 +90,7 @@ public class UserPrinsipal implements UserDetails {
         return  new UserPrinsipal(
                 user.getId(),
                 user.getName(),
-                user.getUserName(),
+                user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
                 authorities

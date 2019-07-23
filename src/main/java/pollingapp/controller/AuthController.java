@@ -42,7 +42,7 @@ public class AuthController {
     JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@RequestBody @Valid LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -58,7 +58,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SingUpRequest singUpRequest) {
+    public ResponseEntity<?> registerUser(@RequestBody @Valid SingUpRequest singUpRequest) {
 
         if (userRepository.existsByUsername(singUpRequest.getUserName())) {
             return new ResponseEntity(new ApiResponse(false, "Username already exist"), HttpStatus.BAD_REQUEST);
@@ -82,7 +82,7 @@ public class AuthController {
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/api/users/{username}")
-                .buildAndExpand(result.getUserName()).toUri();
+                .buildAndExpand(result.getUsername()).toUri();
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
