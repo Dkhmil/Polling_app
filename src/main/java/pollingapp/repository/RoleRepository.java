@@ -1,7 +1,7 @@
-package com.khmil.com.khmil.repository;
+package pollingapp.repository;
 
-import com.khmil.com.khmil.model.Role;
-import com.khmil.com.khmil.model.RoleName;
+import pollingapp.model.Role;
+import pollingapp.model.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.khmil.com.khmil.model.audit;
+package pollingapp.model.audit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,7 +18,6 @@ import java.time.Instant;
         allowGetters = true
 )
 public abstract class DateAudit implements Serializable {
-
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private Instant createdAt;

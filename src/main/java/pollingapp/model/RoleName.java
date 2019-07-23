@@ -1,4 +1,4 @@
-package com.khmil.com.khmil.model;
+package pollingapp.model;
 
 public enum RoleName {
     ROLE_USER,

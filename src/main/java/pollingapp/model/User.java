@@ -1,6 +1,6 @@
-package com.khmil.com.khmil.model;
+package pollingapp.model;
 
-import com.khmil.com.khmil.model.audit.DateAudit;
+import pollingapp.model.audit.DateAudit;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package com.khmil.com.khmil.config;
+package pollingapp.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

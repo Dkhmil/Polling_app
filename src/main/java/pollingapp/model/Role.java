@@ -1,4 +1,4 @@
-package com.khmil.com.khmil.model;
+package pollingapp.model;
 
 import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
