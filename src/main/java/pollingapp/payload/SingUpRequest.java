@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 public class SingUpRequest {
 
     @NotBlank
-    @Size(min= 4, max = 40)
+    @Size(min = 4, max = 40)
     private String name;
 
 
@@ -16,7 +16,7 @@ public class SingUpRequest {
     private String userName;
 
     @NotBlank
-    @Size(max=40)
+    @Size(max = 40)
     @Email
     private String email;
 
