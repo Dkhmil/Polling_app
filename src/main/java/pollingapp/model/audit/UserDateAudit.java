@@ -21,7 +21,7 @@ public class UserDateAudit extends DateAudit {
     @LastModifiedBy
     private Long updateBy;
 
-    public Long getCreateBy() {
+    public Long getCreatedBy() {
         return createBy;
     }
 

@@ -3,6 +3,10 @@ package pollingapp.payload;
 public class UserIdentityAvailability {
     private Boolean available;
 
+    public UserIdentityAvailability(Boolean isAvailable) {
+        this.available = isAvailable;
+    }
+
     public Boolean getAvailable() {
         return available;
     }
