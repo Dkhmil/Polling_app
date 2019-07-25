@@ -8,7 +8,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pollingapp.exception.AppException;
 import pollingapp.model.Role;
@@ -26,8 +29,9 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.Collections;
 
+
 @RestController
-@RequestMapping("api/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
@@ -39,52 +43,41 @@ public class AuthController {
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
-    JwtTokenProvider jwtTokenProvider;
+    JwtTokenProvider tokenProvider;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody @Valid LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUserNameOrEmail(),
+                        loginRequest.getUsernameOrEmail(),
                         loginRequest.getPassword()
                 )
         );
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtTokenProvider.generateToken(authentication);
-
+        String jwt = tokenProvider.generateToken(authentication);
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody @Valid SingUpRequest singUpRequest) {
-
-        if (userRepository.existsByUsername(singUpRequest.getUserName())) {
-            return new ResponseEntity(new ApiResponse(false, "Username already exist"), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SingUpRequest signUpRequest) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+            return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
+                    HttpStatus.BAD_REQUEST);
         }
-
-        if (userRepository.existsByEmail(singUpRequest.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, " Email already exist"), HttpStatus.BAD_REQUEST);
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
+                    HttpStatus.BAD_REQUEST);
         }
-
-        User user = new User(singUpRequest.getName(),
-                singUpRequest.getUserName(),
-                singUpRequest.getEmail(),
-                singUpRequest.getPassword());
-
+        User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
+                signUpRequest.getEmail(), signUpRequest.getPassword());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        Role userRole = roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User Role not set"));
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                .orElseThrow(() -> new AppException("User Role not set."));
         user.setRoles(Collections.singleton(userRole));
-
         User result = userRepository.save(user);
-
         URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/api/users/{username}")
-                .buildAndExpand(result.getUsername()).toUri();
-
+                .fromCurrentContextPath().path("/users/{username}").buildAndExpand(result.getUsername()).toUri();
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
-
 }

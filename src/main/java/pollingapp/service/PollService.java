@@ -132,7 +132,7 @@ public class PollService {
 
     public PollResponse getPollById(Long pollId, UserPrinsipal currentUser) {
         Poll poll = pollRepository.findById(pollId).orElseThrow(() -> new ResourceNotFoundException("Poll", "id", pollId));
-        List<ChoiceVoteCount> votes = voteRepository.countByPollIdGroupedByChoiceId(pollId);
+        List<ChoiceVoteCount> votes = voteRepository.countByPollIdGroupByChoiceId(pollId);
         Map<Long, Long> choiceVotesMap = votes.stream()
                 .collect(Collectors.toMap(ChoiceVoteCount::getChoiceId, ChoiceVoteCount::getVoteCount));
         User creator = userRepository.findById(poll.getCreatedBy()).orElseThrow(() -> new ResourceNotFoundException("User", "id", poll.getCreatedBy()));
@@ -164,7 +164,7 @@ public class PollService {
             logger.info("User {} has already voted in Poll {}", currentUser.getId(), pollId);
             throw new BadRequestException("Sorry! You have already cast your vote in this poll");
         }
-        List<ChoiceVoteCount> votes = voteRepository.countByPollIdGroupedByChoiceId(pollId);
+        List<ChoiceVoteCount> votes = voteRepository.countByPollIdGroupByChoiceId(pollId);
         Map<Long, Long> choiseVotesMap = votes.stream()
                 .collect(Collectors.toMap(ChoiceVoteCount::getChoiceId, ChoiceVoteCount::getVoteCount));
         logger.info("User {} has already voted in Poll {}", currentUser.getId(), pollId);
@@ -181,7 +181,7 @@ public class PollService {
     }
 
     private Map<Long, Long> getChoiceVoteCountMap(List<Long> pollIds) {
-        List<ChoiceVoteCount> votes = voteRepository.countByPollIdGroupedByChoiceId(pollIds);
+        List<ChoiceVoteCount> votes = voteRepository.countByPollIdInGroupedByChoiceId(pollIds);
         Map<Long, Long> choiceVotesMap = votes.stream()
                 .collect(Collectors.toMap(ChoiceVoteCount::getChoiceId, ChoiceVoteCount::getVoteCount));
         return choiceVotesMap;

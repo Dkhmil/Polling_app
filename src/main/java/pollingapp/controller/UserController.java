@@ -16,8 +16,6 @@ import pollingapp.security.UserPrinsipal;
 import pollingapp.service.PollService;
 import pollingapp.util.AppConstants;
 
-import java.nio.file.attribute.UserPrincipal;
-
 @RestController
 @RequestMapping("/api")
 public class UserController {
