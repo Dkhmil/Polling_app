@@ -5,8 +5,8 @@ public class JwtAuthenticationResponse {
     private String accessToken;
     private String tokenType = "Bearer";
 
-    public JwtAuthenticationResponse(String accessToten) {
-        this.accessToken = accessToten;
+    public JwtAuthenticationResponse(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public String getAccessToten() {

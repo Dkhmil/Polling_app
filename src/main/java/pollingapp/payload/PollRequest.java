@@ -12,9 +12,8 @@ public class PollRequest {
     private String question;
 
     @NotNull
-    @Size(min = 2, max = 6)
     @Valid
-    private List<ChoiceRequest> choiises;
+    private List<ChoiceRequest> choices;
 
     @NotNull
     @Valid
@@ -28,12 +27,12 @@ public class PollRequest {
         this.question = question;
     }
 
-    public List<ChoiceRequest> getChoiises() {
-        return choiises;
+    public List<ChoiceRequest> getChoices() {
+        return choices;
     }
 
     public void setChoiises(List<ChoiceRequest> choiises) {
-        this.choiises = choiises;
+        this.choices = choiises;
     }
 
     public PollLength getPollLength() {

@@ -20,12 +20,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userNameOrEmail) throws UsernameNotFoundException {
         User user = userRepository.findByUsernameOrEmail(userNameOrEmail, userNameOrEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username or email : " + userNameOrEmail));
-        return UserPrinsipal.create(user);
+        return UserPrincipal.create(user);
     }
 
     public UserDetails loadUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with id : " + id));
-        return UserPrinsipal.create(user);
+        return UserPrincipal.create(user);
     }
 }

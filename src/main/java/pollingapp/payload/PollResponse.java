@@ -8,13 +8,13 @@ import java.util.List;
 public class PollResponse {
     private Long id;
     private String question;
-    private List<ChoiceResponse> choises;
+    private List<ChoiceResponse> choiсes;
     private UserSummary createdby;
     private Instant creationdateTime;
     private Instant expirationdatetime;
     private Boolean isEpired;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Long selectedChoise;
+    private Long selectedChoiсe;
     private Long totalVotes;
 
     public Long getId() {
@@ -33,12 +33,12 @@ public class PollResponse {
         this.question = question;
     }
 
-    public List<ChoiceResponse> getChoises() {
-        return choises;
+    public List<ChoiceResponse> getChoiсes() {
+        return choiсes;
     }
 
     public void setChoises(List<ChoiceResponse> choises) {
-        this.choises = choises;
+        this.choiсes = choises;
     }
 
     public UserSummary getCreatedBy() {
@@ -75,11 +75,11 @@ public class PollResponse {
     }
 
     public Long getSelectedChoise() {
-        return selectedChoise;
+        return selectedChoiсe;
     }
 
-    public void setSelectedChoise(Long selectedChoise) {
-        this.selectedChoise = selectedChoise;
+    public void setSelectedChoiсe(Long selectedChoise) {
+        this.selectedChoiсe = selectedChoise;
     }
 
     public Long getTotalVotes() {

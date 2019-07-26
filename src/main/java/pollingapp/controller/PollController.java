@@ -9,18 +9,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pollingapp.model.Poll;
 import pollingapp.payload.*;
-import pollingapp.repository.*;
+import pollingapp.repository.PollRepository;
+import pollingapp.repository.UserRepository;
+import pollingapp.repository.VoteRepository;
 import pollingapp.security.CurrentUser;
-import pollingapp.security.UserPrinsipal;
+import pollingapp.security.UserPrincipal;
 import pollingapp.service.PollService;
+import pollingapp.util.AppConstants;
 
 import javax.validation.Valid;
-
 import java.net.URI;
-
-import static pollingapp.util.AppConstants.DEFAULT_PAGE_NUMBER;
-import static pollingapp.util.AppConstants.DEFAULT_PAGE_SIZE;
-
 
 @RestController
 @RequestMapping("/api/polls")
@@ -28,27 +26,28 @@ public class PollController {
 
     @Autowired
     private PollRepository pollRepository;
+
     @Autowired
     private VoteRepository voteRepository;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private PollService pollService;
 
     private static final Logger logger = LoggerFactory.getLogger(PollController.class);
 
-
     @GetMapping
-    public PagedResponse<PollResponse> getPolls(@CurrentUser UserPrinsipal currentUser,
-                                                @RequestParam(value = "page", defaultValue = DEFAULT_PAGE_NUMBER) int page,
-                                                @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE) int size) {
+    public PagedResponse<PollResponse> getPolls(@CurrentUser UserPrincipal currentUser,
+                                                @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
         return pollService.getAllPolls(currentUser, page, size);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> createPoll(@Valid @RequestBody PollRequest pollRequest) {
-
         Poll poll = pollService.createPoll(pollRequest);
 
         URI location = ServletUriComponentsBuilder
@@ -60,18 +59,16 @@ public class PollController {
     }
 
     @GetMapping("/{pollId}")
-    public PollResponse getPollById(@PathVariable Long pollId, @CurrentUser UserPrinsipal currentUser) {
+    public PollResponse getPollById(@CurrentUser UserPrincipal currentUser,
+                                    @PathVariable Long pollId) {
         return pollService.getPollById(pollId, currentUser);
-
     }
 
     @PostMapping("/{pollId}/votes")
     @PreAuthorize("hasRole('USER')")
-    public PollResponse castVote(@CurrentUser UserPrinsipal currentUser,
-                                 @PathVariable Long pollingId,
+    public PollResponse castVote(@CurrentUser UserPrincipal currentUser,
+                                 @PathVariable Long pollId,
                                  @Valid @RequestBody VoteRequest voteRequest) {
-        return pollService.castVoteAndGetUpdatePoll(pollingId, voteRequest, currentUser);
+        return pollService.castVoteAndGetUpdatedPoll(pollId, voteRequest, currentUser);
     }
-
-
 }

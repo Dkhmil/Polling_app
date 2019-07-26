@@ -22,7 +22,7 @@ public class ModelMapper {
         Instant now = Instant.now();
         pollResponse.setEpired(poll.getExpirationDateTime().isBefore(now));
 
-        List<ChoiceResponse> choiceResponses = poll.getChoises()
+        List<ChoiceResponse> choiceResponses = poll.getChoiсes()
                 .stream()
                 .map(choice -> {
                     ChoiceResponse choiceResponse = new ChoiceResponse();
@@ -42,9 +42,9 @@ public class ModelMapper {
         pollResponse.setCreatedby(creatorSummary);
 
         if (userVote != null) {
-            pollResponse.setSelectedChoise(userVote);
+            pollResponse.setSelectedChoiсe(userVote);
         }
-        long totalVotes = pollResponse.getChoises()
+        long totalVotes = pollResponse.getChoiсes()
                 .stream()
                 .mapToLong(ChoiceResponse::getVoteCount)
                 .sum();

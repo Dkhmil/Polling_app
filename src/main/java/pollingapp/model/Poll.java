@@ -30,7 +30,7 @@ public class Poll extends UserDateAudit {
     @Size(min = 2, max = 6)
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 30)
-    private List<Choice> choises = new ArrayList<Choice>();
+    private List<Choice> choiсes = new ArrayList<>();
 
     @NotNull
     private Instant expirationDateTime;
@@ -51,12 +51,12 @@ public class Poll extends UserDateAudit {
         this.question = question;
     }
 
-    public List<Choice> getChoises() {
-        return choises;
+    public List<Choice> getChoiсes() {
+        return choiсes;
     }
 
-    public void setChoises(List<Choice> choises) {
-        this.choises = choises;
+    public void setChoiсes(List<Choice> choiсes) {
+        this.choiсes = choiсes;
     }
 
     public Instant getExpirationDateTime() {
@@ -68,12 +68,12 @@ public class Poll extends UserDateAudit {
     }
 
     public void addChoice(Choice choice) {
-        choises.add(choice);
+        choiсes.add(choice);
         choice.setPoll(this);
     }
 
     public void removeChoice(Choice choice) {
-        choises.remove(choice);
+        choiсes.remove(choice);
         choice.setPoll(null);
     }
 

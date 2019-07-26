@@ -1,16 +1,17 @@
 package pollingapp.payload;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class PollLength {
 
     @NotNull
-    @Size(max = 7)
+    @Range(min=0, max=7)
     private Integer days;
 
     @NotNull
-    @Size(max = 23)
+    @Range(min=0, max=23)
     private Integer hours;
 
     public Integer getDays() {

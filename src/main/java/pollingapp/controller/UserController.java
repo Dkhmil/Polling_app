@@ -12,7 +12,7 @@ import pollingapp.repository.PollRepository;
 import pollingapp.repository.UserRepository;
 import pollingapp.repository.VoteRepository;
 import pollingapp.security.CurrentUser;
-import pollingapp.security.UserPrinsipal;
+import pollingapp.security.UserPrincipal;
 import pollingapp.service.PollService;
 import pollingapp.util.AppConstants;
 
@@ -31,7 +31,7 @@ public class UserController {
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
-    public UserSummary getCurrentUser(@CurrentUser UserPrinsipal currentUser) {
+    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
         return userSummary;
     }
@@ -66,20 +66,20 @@ public class UserController {
 
     @GetMapping("/users/{username}/polls")
     public PagedResponse<PollResponse> getPollsCreatedBy(@PathVariable(name = "username") String username,
-                                                         @CurrentUser UserPrinsipal userPrinsipal,
+                                                         @CurrentUser UserPrincipal userPrincipal,
                                                          @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                                          @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
 
-        return pollService.getPollsCreatedBy(username, userPrinsipal, page, size);
+        return pollService.getPollsCreatedBy(username, userPrincipal, page, size);
     }
 
 
     @GetMapping("/users/{username}/votes")
     public PagedResponse<PollResponse> getPollsVotedBy(@PathVariable(name = "username") String username,
-                                                       @CurrentUser UserPrinsipal userPrinsipal,
+                                                       @CurrentUser UserPrincipal userPrincipal,
                                                        @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                                        @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
 
-        return pollService.getPollsVotedBy(username, userPrinsipal, page, size);
+        return pollService.getPollsVotedBy(username, userPrincipal, page, size);
     }
 }

@@ -3,6 +3,7 @@ package pollingapp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,16 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pollingapp.exception.AppException;
+import pollingapp.model.Poll;
 import pollingapp.model.Role;
 import pollingapp.model.RoleName;
 import pollingapp.model.User;
-import pollingapp.payload.ApiResponse;
-import pollingapp.payload.JwtAuthenticationResponse;
-import pollingapp.payload.LoginRequest;
-import pollingapp.payload.SingUpRequest;
+import pollingapp.payload.*;
 import pollingapp.repository.RoleRepository;
 import pollingapp.repository.UserRepository;
 import pollingapp.security.JwtTokenProvider;
+import pollingapp.service.PollService;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -44,6 +44,8 @@ public class AuthController {
     PasswordEncoder passwordEncoder;
     @Autowired
     JwtTokenProvider tokenProvider;
+    @Autowired
+    PollService pollService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -79,5 +81,17 @@ public class AuthController {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}").buildAndExpand(result.getUsername()).toUri();
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createPoll(@Valid @RequestBody PollRequest pollRequest) {
+        Poll poll = pollService.createPoll(pollRequest);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{pollId}")
+                .buildAndExpand(poll.getId()).toUri();
+
+        return ResponseEntity.created(location)
+                .body(new ApiResponse(true, "Poll Created Successfully"));
     }
 }

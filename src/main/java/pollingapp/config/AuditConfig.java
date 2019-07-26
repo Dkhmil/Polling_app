@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import pollingapp.security.UserPrinsipal;
+import pollingapp.security.UserPrincipal;
 
 import java.util.Optional;
 
@@ -27,8 +27,8 @@ public class AuditConfig {
             if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
                 return Optional.empty();
             }
-            UserPrinsipal userPrinsipal = (UserPrinsipal) authentication.getPrincipal();
-            return Optional.ofNullable(userPrinsipal.getId());
+            UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+            return Optional.ofNullable(userPrincipal.getId());
         }
     }
 }

@@ -20,7 +20,7 @@ public class Vote extends DateAudit {
     @JoinColumn(name = "poll_id", nullable = false)
     private Poll poll;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
