@@ -49,11 +49,9 @@ public class PollController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> createPoll(@Valid @RequestBody PollRequest pollRequest) {
         Poll poll = pollService.createPoll(pollRequest);
-
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{pollId}")
                 .buildAndExpand(poll.getId()).toUri();
-
         return ResponseEntity.created(location)
                 .body(new ApiResponse(true, "Poll Created Successfully"));
     }
