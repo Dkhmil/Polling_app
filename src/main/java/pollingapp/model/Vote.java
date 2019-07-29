@@ -8,10 +8,10 @@ import javax.persistence.*;
 @Table(name = "votes", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "poll_id",
-                "user_id"})
+                "user_id"
+        })
 })
 public class Vote extends DateAudit {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,13 +20,13 @@ public class Vote extends DateAudit {
     @JoinColumn(name = "poll_id", nullable = false)
     private Poll poll;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "choice_id", nullable = false)
     private Choice choice;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Long getId() {
         return id;
@@ -44,19 +44,19 @@ public class Vote extends DateAudit {
         this.poll = poll;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Choice getChoice() {
         return choice;
     }
 
     public void setChoice(Choice choice) {
         this.choice = choice;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

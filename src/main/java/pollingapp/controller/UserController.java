@@ -19,14 +19,19 @@ import pollingapp.util.AppConstants;
 @RestController
 @RequestMapping("/api")
 public class UserController {
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private PollRepository pollRepository;
+
     @Autowired
     private VoteRepository voteRepository;
+
     @Autowired
     private PollService pollService;
+
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/user/me")
@@ -37,13 +42,13 @@ public class UserController {
     }
 
     @GetMapping("/user/checkUsernameAvailability")
-    public UserIdentityAvailability checkUserNameAvailability(@RequestParam(value = "username") String userName) {
-        Boolean isAvailable = !userRepository.existsByUsername(userName);
+    public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
+        Boolean isAvailable = !userRepository.existsByUsername(username);
         return new UserIdentityAvailability(isAvailable);
     }
 
     @GetMapping("/user/checkEmailAvailability")
-    public UserIdentityAvailability checkUserEmailAvailability(@RequestParam(value = "email") String email) {
+    public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {
         Boolean isAvailable = !userRepository.existsByEmail(email);
         return new UserIdentityAvailability(isAvailable);
     }
@@ -53,33 +58,29 @@ public class UserController {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-        long pollCount = pollRepository.countByCreateBy(user.getId());
+        long pollCount = pollRepository.countByCreatedBy(user.getId());
         long voteCount = voteRepository.countByUserId(user.getId());
-        UserProfile userProfile = new UserProfile(user.getId(),
-                user.getName(),
-                user.getUsername(),
-                user.getCreatedAt(),
-                pollCount,
-                voteCount);
+
+        UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), pollCount, voteCount);
+
         return userProfile;
     }
 
     @GetMapping("/users/{username}/polls")
-    public PagedResponse<PollResponse> getPollsCreatedBy(@PathVariable(name = "username") String username,
-                                                         @CurrentUser UserPrincipal userPrincipal,
+    public PagedResponse<PollResponse> getPollsCreatedBy(@PathVariable(value = "username") String username,
+                                                         @CurrentUser UserPrincipal currentUser,
                                                          @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                                          @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
-
-        return pollService.getPollsCreatedBy(username, userPrincipal, page, size);
+        return pollService.getPollsCreatedBy(username, currentUser, page, size);
     }
 
 
     @GetMapping("/users/{username}/votes")
-    public PagedResponse<PollResponse> getPollsVotedBy(@PathVariable(name = "username") String username,
-                                                       @CurrentUser UserPrincipal userPrincipal,
+    public PagedResponse<PollResponse> getPollsVotedBy(@PathVariable(value = "username") String username,
+                                                       @CurrentUser UserPrincipal currentUser,
                                                        @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                                        @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
-
-        return pollService.getPollsVotedBy(username, userPrincipal, page, size);
+        return pollService.getPollsVotedBy(username, currentUser, page, size);
     }
+
 }

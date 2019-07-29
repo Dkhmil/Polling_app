@@ -4,6 +4,7 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import pollingapp.model.audit.UserDateAudit;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -18,9 +19,11 @@ public class Poll extends UserDateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
     @Size(max = 140)
     private String question;
+
     @OneToMany(
             mappedBy = "poll",
             cascade = CascadeType.ALL,
@@ -30,7 +33,7 @@ public class Poll extends UserDateAudit {
     @Size(min = 2, max = 6)
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 30)
-    private List<Choice> choiсes = new ArrayList<>();
+    private List<Choice> choices = new ArrayList<>();
 
     @NotNull
     private Instant expirationDateTime;
@@ -51,12 +54,12 @@ public class Poll extends UserDateAudit {
         this.question = question;
     }
 
-    public List<Choice> getChoiсes() {
-        return choiсes;
+    public List<Choice> getChoices() {
+        return choices;
     }
 
-    public void setChoiсes(List<Choice> choiсes) {
-        this.choiсes = choiсes;
+    public void setChoices(List<Choice> choices) {
+        this.choices = choices;
     }
 
     public Instant getExpirationDateTime() {
@@ -68,14 +71,12 @@ public class Poll extends UserDateAudit {
     }
 
     public void addChoice(Choice choice) {
-        choiсes.add(choice);
+        choices.add(choice);
         choice.setPoll(this);
     }
 
     public void removeChoice(Choice choice) {
-        choiсes.remove(choice);
+        choices.remove(choice);
         choice.setPoll(null);
     }
-
-
 }

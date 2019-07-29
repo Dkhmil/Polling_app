@@ -4,17 +4,17 @@ import java.time.Instant;
 
 public class UserProfile {
     private Long id;
-    private String name;
     private String username;
-    private Instant joinAt;
+    private String name;
+    private Instant joinedAt;
     private Long pollCount;
     private Long voteCount;
 
-    public UserProfile(Long id, String name, String username, Instant joinAt, Long pollCount, Long voteCount) {
+    public UserProfile(Long id, String username, String name, Instant joinedAt, Long pollCount, Long voteCount) {
         this.id = id;
-        this.name = name;
         this.username = username;
-        this.joinAt = joinAt;
+        this.name = name;
+        this.joinedAt = joinedAt;
         this.pollCount = pollCount;
         this.voteCount = voteCount;
     }
@@ -27,14 +27,6 @@ public class UserProfile {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -43,12 +35,20 @@ public class UserProfile {
         this.username = username;
     }
 
-    public Instant getJoinAt() {
-        return joinAt;
+    public String getName() {
+        return name;
     }
 
-    public void setJoinAt(Instant joinAt) {
-        this.joinAt = joinAt;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Instant getJoinedAt() {
+        return joinedAt;
+    }
+
+    public void setJoinedAt(Instant joinedAt) {
+        this.joinedAt = joinedAt;
     }
 
     public Long getPollCount() {

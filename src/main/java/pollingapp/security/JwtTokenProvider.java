@@ -1,7 +1,5 @@
 package pollingapp.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +21,10 @@ public class JwtTokenProvider {
     private int jwtExpirationInMs;
 
     public String generateToken(Authentication authentication) {
+
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
         Date now = new Date();
-
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
         return Jwts.builder()
@@ -35,7 +33,6 @@ public class JwtTokenProvider {
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
-
     }
 
     public Long getUserIdFromJWT(String token) {
@@ -43,17 +40,16 @@ public class JwtTokenProvider {
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
                 .getBody();
+
         return Long.parseLong(claims.getSubject());
     }
 
     public boolean validateToken(String authToken) {
-    /*    logger.error("Invalid JWT signature" + jwtSecret + "  " +  authToken);
-        logger.debug("Invalid JWT signature" + jwtSecret + "  " +  authToken);
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException ex) {
-            logger.error("Invalid JWT signature" + ex.getMessage() + jwtSecret + "  " +  authToken);
+            logger.error("Invalid JWT signature");
         } catch (MalformedJwtException ex) {
             logger.error("Invalid JWT token");
         } catch (ExpiredJwtException ex) {
@@ -63,9 +59,6 @@ public class JwtTokenProvider {
         } catch (IllegalArgumentException ex) {
             logger.error("JWT claims string is empty.");
         }
-        return false;*/
-        return true;
+        return false;
     }
-
-
 }

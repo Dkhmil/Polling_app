@@ -1,7 +1,6 @@
 package pollingapp.model;
 
 public class ChoiceVoteCount {
-
     private Long choiceId;
     private Long voteCount;
 

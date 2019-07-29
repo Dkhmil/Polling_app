@@ -12,28 +12,27 @@ import javax.persistence.MappedSuperclass;
         value = {"createdBy", "updatedBy"},
         allowGetters = true
 )
-public class UserDateAudit extends DateAudit {
-
+public abstract class UserDateAudit extends DateAudit {
     @CreatedBy
     @Column(updatable = false)
-    private Long createBy;
+    private Long createdBy;
 
     @LastModifiedBy
-    private Long updateBy;
+    private Long updatedBy;
 
     public Long getCreatedBy() {
-        return createBy;
+        return createdBy;
     }
 
-    public void setCreateBy(Long createBy) {
-        this.createBy = createBy;
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public Long getUpdateBy() {
-        return updateBy;
+    public Long getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setUpdateBy(Long updateBy) {
-        this.updateBy = updateBy;
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
     }
 }

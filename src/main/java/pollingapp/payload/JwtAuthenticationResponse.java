@@ -1,7 +1,6 @@
 package pollingapp.payload;
 
 public class JwtAuthenticationResponse {
-
     private String accessToken;
     private String tokenType = "Bearer";
 
@@ -9,19 +8,19 @@ public class JwtAuthenticationResponse {
         this.accessToken = accessToken;
     }
 
-    public String getAccessToten() {
+    public String getAccessToken() {
         return accessToken;
     }
 
-    public void setAccessToten(String accessToten) {
-        this.accessToken = accessToten;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public String getTokentype() {
+    public String getTokenType() {
         return tokenType;
     }
 
-    public void setTokentype(String tokentype) {
-        this.tokenType = tokentype;
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
     }
 }

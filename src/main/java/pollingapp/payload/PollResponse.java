@@ -8,13 +8,14 @@ import java.util.List;
 public class PollResponse {
     private Long id;
     private String question;
-    private List<ChoiceResponse> choiсes;
-    private UserSummary createdby;
-    private Instant creationdateTime;
-    private Instant expirationdatetime;
-    private Boolean isEpired;
+    private List<ChoiceResponse> choices;
+    private UserSummary createdBy;
+    private Instant creationDateTime;
+    private Instant expirationDateTime;
+    private Boolean isExpired;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Long selectedChoiсe;
+    private Long selectedChoice;
     private Long totalVotes;
 
     public Long getId() {
@@ -33,53 +34,53 @@ public class PollResponse {
         this.question = question;
     }
 
-    public List<ChoiceResponse> getChoiсes() {
-        return choiсes;
+    public List<ChoiceResponse> getChoices() {
+        return choices;
     }
 
-    public void setChoises(List<ChoiceResponse> choises) {
-        this.choiсes = choises;
+    public void setChoices(List<ChoiceResponse> choices) {
+        this.choices = choices;
     }
 
     public UserSummary getCreatedBy() {
-
-        return createdby;
+        return createdBy;
     }
 
-    public void setCreatedby(UserSummary createdby) {
-        this.createdby = createdby;
+    public void setCreatedBy(UserSummary createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public Instant getCreationdateTime() {
-        return creationdateTime;
+
+    public Instant getCreationDateTime() {
+        return creationDateTime;
     }
 
-    public void setCreationdateTime(Instant creationdateTime) {
-        this.creationdateTime = creationdateTime;
+    public void setCreationDateTime(Instant creationDateTime) {
+        this.creationDateTime = creationDateTime;
     }
 
-    public Instant getExpirationdatetime() {
-        return expirationdatetime;
+    public Instant getExpirationDateTime() {
+        return expirationDateTime;
     }
 
-    public void setExpirationdatetime(Instant expirationdatetime) {
-        this.expirationdatetime = expirationdatetime;
+    public void setExpirationDateTime(Instant expirationDateTime) {
+        this.expirationDateTime = expirationDateTime;
     }
 
-    public Boolean getEpired() {
-        return isEpired;
+    public Boolean getExpired() {
+        return isExpired;
     }
 
-    public void setEpired(Boolean epired) {
-        isEpired = epired;
+    public void setExpired(Boolean expired) {
+        isExpired = expired;
     }
 
-    public Long getSelectedChoise() {
-        return selectedChoiсe;
+    public Long getSelectedChoice() {
+        return selectedChoice;
     }
 
-    public void setSelectedChoiсe(Long selectedChoise) {
-        this.selectedChoiсe = selectedChoise;
+    public void setSelectedChoice(Long selectedChoice) {
+        this.selectedChoice = selectedChoice;
     }
 
     public Long getTotalVotes() {

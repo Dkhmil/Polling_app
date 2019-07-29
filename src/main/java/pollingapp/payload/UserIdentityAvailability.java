@@ -3,8 +3,8 @@ package pollingapp.payload;
 public class UserIdentityAvailability {
     private Boolean available;
 
-    public UserIdentityAvailability(Boolean isAvailable) {
-        this.available = isAvailable;
+    public UserIdentityAvailability(Boolean available) {
+        this.available = available;
     }
 
     public Boolean getAvailable() {

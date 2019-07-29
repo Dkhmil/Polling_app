@@ -1,15 +1,15 @@
 package pollingapp.payload;
 
 public class ChoiceResponse {
-    private Long id;
+    private long id;
     private String text;
-    private Long voteCount;
+    private long voteCount;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -21,11 +21,11 @@ public class ChoiceResponse {
         this.text = text;
     }
 
-    public Long getVoteCount() {
+    public long getVoteCount() {
         return voteCount;
     }
 
-    public void setVoteCount(Long voteCount) {
+    public void setVoteCount(long voteCount) {
         this.voteCount = voteCount;
     }
 }

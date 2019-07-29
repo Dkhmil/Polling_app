@@ -3,9 +3,9 @@ package pollingapp.payload;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
-
     @NotBlank
     private String usernameOrEmail;
+
     @NotBlank
     private String password;
 
@@ -13,8 +13,8 @@ public class LoginRequest {
         return usernameOrEmail;
     }
 
-    public void setUserNameOrEmail(String userNameOrEmail) {
-        this.usernameOrEmail = userNameOrEmail;
+    public void setUsernameOrEmail(String usernameOrEmail) {
+        this.usernameOrEmail = usernameOrEmail;
     }
 
     public String getPassword() {

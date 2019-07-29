@@ -19,6 +19,7 @@ import pollingapp.security.CustomUserDetailsService;
 import pollingapp.security.JwtAuthenticationEntryPoint;
 import pollingapp.security.JwtAuthenticationFilter;
 
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -27,7 +28,6 @@ import pollingapp.security.JwtAuthenticationFilter;
         prePostEnabled = true
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     CustomUserDetailsService customUserDetailsService;
 
@@ -90,6 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated();
 
+        // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }

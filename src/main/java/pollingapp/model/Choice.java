@@ -8,7 +8,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "choices")
 public class Choice {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +21,7 @@ public class Choice {
     private Poll poll;
 
     public Choice() {
+
     }
 
     public Choice(String text) {
@@ -55,15 +55,13 @@ public class Choice {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Choice)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Choice choice = (Choice) o;
-        return Objects.equals(getId(), choice.getId()) &&
-                Objects.equals(getText(), choice.getText()) &&
-                Objects.equals(getPoll(), choice.getPoll());
+        return Objects.equals(id, choice.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getText(), getPoll());
+        return Objects.hash(id);
     }
 }
